@@ -15,13 +15,13 @@ strand_width = .8; //[.10:.01:10.00]
 strand_height = .8; //[.10:.01:5]
 
 // Spacing between filter wires, i.e. hole size.
-gap_size = 8; //[.10:.01:10.00]
+gap_size = 1; //[.10:.01:10.00]
 
 // Rotation (in degrees) of filter wires in relation to shape.
 grid_rotation = 0; // [0:1:90]
 
 // Thickness (width) of the outer rim (will increase with height if taper > 1).
-rim_thickness = 1.7; //[.3:.01:5]
+rim_thickness = 3; //[.3:.01:5]
 
 // Total height of the outer rim.
 rim_height = 5; //[0:.1:50]
