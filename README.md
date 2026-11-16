@@ -7,6 +7,8 @@ the first tray whose holes it can't pass through.
 
 Made out of dire need, in OpenSCAD.
 
+![A sieve tray (green) sitting in its holder ring (blue)](docs/img/tray-in-holder.png)
+
 ## Make one
 
 Open `screw_sorter.scad` in OpenSCAD and use the Customizer:
