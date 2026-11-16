@@ -19,3 +19,13 @@ test:
 images:
     @mkdir -p docs/img
     openscad --render --imgsize=900,600 --viewall --autocenter --camera=0,0,0,55,0,25,0 --colorscheme=Tomorrow -D 'render="all"' -o docs/img/tray-in-holder.png screw_sorter.scad
+
+# Render the 1 mm to 10 mm trays and the holder into batch/, the set printed in 2025
+batch:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    mkdir -p batch
+    for g in 1 2 3 4 5 6 7 8 9 10; do
+        openscad --hardwarnings --export-format binstl -D 'render="sieve"' -D "gap_size=$g" -o "batch/${g}mm.stl" screw_sorter.scad
+    done
+    openscad --hardwarnings --export-format binstl -D 'render="holder"' -o batch/holder.stl screw_sorter.scad

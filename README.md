@@ -23,11 +23,21 @@ Open `screw_sorter.scad` in OpenSCAD and use the Customizer:
 The sorter is round only. `examples/sieve.scad` and `examples/holder.scad`
 render the default tray and holder.
 
-## Ready-made prints
+## Printing a set
 
-- `batch/`: ten 120 mm trays labelled 1 mm to 10 mm, their holder, and
-  PrusaSlicer projects that plate them (January and February 2025).
-- `prints/`: the first test prints, three trays and a holder (January 2025).
+`just batch` renders the set printed in 2025 into `batch/`: ten 120 mm trays
+with gaps of 1 mm to 10 mm, and the holder. They were printed on a Prusa XL
+with a 0.4 mm nozzle, five trays to a plate, in PrusaSlicer 2.9.0:
+
+- profile: 0.10mm FAST DETAIL @XLIS 0.4
+- filament: Generic PLA, 220 °C, bed 60 °C
+- 0.1 mm layers, 3 perimeters, 7 bottom and 8 top solid layers
+- 15 % grid infill; supports off for the trays, on for the holder
+
+`prints/` holds the first test prints from January 2025: three trays with
+3, 5 and 8 mm gaps and a holder, with their PrusaSlicer projects. They came
+from an earlier version of the design that is no longer in this repository,
+so they don't match what `screw_sorter.scad` renders now.
 
 ## How it's built
 
