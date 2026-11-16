@@ -1,9 +1,6 @@
-use <print3D-customizable-sieve/sieve.scad>;
+use <lib/sieve.scad>;
 
 /* [General] */
-
-// Shape of the sieve
-shape = "round"; // [round,square,heart]
 
 // Outer diameter of the
 outer_diameter = 120; //[5.0:.1:250.0]
@@ -17,16 +14,13 @@ strand_height = .8; //[.10:.01:5]
 // Spacing between filter wires, i.e. hole size.
 gap_size = 1; //[.10:.01:10.00]
 
-// Rotation (in degrees) of filter wires in relation to shape.
-grid_rotation = 0; // [0:1:90]
-
 // Thickness (width) of the outer rim (will increase with height if taper > 1).
 rim_thickness = 3; //[.3:.01:5]
 
 // Total height of the outer rim.
 rim_height = 5; //[0:.1:50]
 
-// Taper of the tube: scale factor of top versus bottom contour. Not applicable to heart shape.
+// Taper of the tube: scale factor of top versus bottom contour.
 taper = 1; //[1:0.01:3]
 
 // If true, wires are placed in layers for faster, better prints with thin strands.
@@ -45,7 +39,7 @@ holder_dia_allowance = 0.3;
 holder_height_allowance = 0.4;
 
 // Number of segments for round shape, low values can be used to obtain polygons that fit inside a circle of the
-// specified outer diameter. For instance, 3 yields a triangle. Also affects heart shape.
+// specified outer diameter. For instance, 3 yields a triangle.
 $fn = 72; //[3:1:256]
 
 /* [Render Control] */
