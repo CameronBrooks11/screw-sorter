@@ -1,2 +1,3 @@
 title: screw-sorter
 description: A stack of 3D-printed sieves that sorts screws by size, with holder rings between the trays, in OpenSCAD
+models: screw_sorter.scad
