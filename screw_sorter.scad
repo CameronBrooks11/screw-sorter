@@ -52,12 +52,16 @@ zFite = $preview ? 0.1 : 0;
 shift_abs = gap_size + strand_width;
 
 if (render == "sieve" || render == "all")
-    color("green") sieve(od_x = outer_diameter, od_y = outer_diameter, strand_width = strand_width,
-                         strand_thick = strand_height, gap = gap_size, rim_thick = rim_thickness, rim_h = rim_height,
-                         taper_scale = taper, do_offset = offset_strands, sh_x = shift_abs, sh_y = shift_abs);
+    color("green") sieve(
+            od_x=outer_diameter, od_y=outer_diameter, strand_width=strand_width,
+            strand_thick=strand_height, gap=gap_size, rim_thick=rim_thickness, rim_h=rim_height,
+            taper_scale=taper, do_offset=offset_strands, sh_x=shift_abs, sh_y=shift_abs
+        );
 
 if (render == "holder" || render == "all")
-    color("blue") stackable_sieve_holder(od_x = outer_diameter, od_y = outer_diameter, rim_thick = rim_thickness,
-                                         rim_h = rim_height, insert_allowance = holder_insert_allowance,
-                                         holder_h_allowance = holder_height_allowance,
-                                         holder_rim_allowance = holder_dia_allowance, taper_scale = taper);
+    color("blue") stackable_sieve_holder(
+            od_x=outer_diameter, od_y=outer_diameter, rim_thick=rim_thickness,
+            rim_h=rim_height, insert_allowance=holder_insert_allowance,
+            holder_h_allowance=holder_height_allowance,
+            holder_rim_allowance=holder_dia_allowance, taper_scale=taper
+        );

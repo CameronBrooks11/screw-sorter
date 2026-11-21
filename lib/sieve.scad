@@ -90,37 +90,30 @@ shift_y_abs = (gap_size + strand_width) * shift_y / 100;
  * @param thick Thickness of the heart.
  * @param inside 0: heart with inside volume removed, 1: inside volume of the heart.
  */
-module flat_heart(r_x, r_y, thick, inside)
-{
+module flat_heart(r_x, r_y, thick, inside) {
     // radius + 2 * square
     s_x = (r_x * 2) / 1.5;
     b = s_x / 2;
     w = thick * 2;
 
-    if (inside == 1)
-    {
-        translate([ -r_x, -r_x, 0 ]) union()
-        {
-            square(s_x);
-            translate([ b, s_x, 0 ]) circle(d = s_x);
-            translate([ s_x, b, 0 ]) circle(d = s_x);
-        }
-    }
-    else
-    {
-        translate([ -r_x, -r_x, 0 ]) difference()
-        {
-            union()
-            {
+    if (inside == 1) {
+        translate([-r_x, -r_x, 0]) union() {
                 square(s_x);
-                translate([ b, s_x, 0 ]) circle(d = s_x);
-                translate([ s_x, b, 0 ]) circle(d = s_x);
+                translate([b, s_x, 0]) circle(d=s_x);
+                translate([s_x, b, 0]) circle(d=s_x);
             }
-            translate([ w / 2, w / 2 ]) square([ s_x - (w / 2), s_x - w ]);
-            translate([ w / 2, w / 2 ]) square([ s_x - w, s_x - (w / 2) ]);
-            translate([ b, s_x, 0 ]) circle(d = s_x - w);
-            translate([ s_x, b, 0 ]) circle(d = s_x - w);
-        }
+    } else {
+        translate([-r_x, -r_x, 0]) difference() {
+                union() {
+                    square(s_x);
+                    translate([b, s_x, 0]) circle(d=s_x);
+                    translate([s_x, b, 0]) circle(d=s_x);
+                }
+                translate([w / 2, w / 2]) square([s_x - (w / 2), s_x - w]);
+                translate([w / 2, w / 2]) square([s_x - w, s_x - (w / 2)]);
+                translate([b, s_x, 0]) circle(d=s_x - w);
+                translate([s_x, b, 0]) circle(d=s_x - w);
+            }
     }
 }
 
@@ -134,54 +127,34 @@ module flat_heart(r_x, r_y, thick, inside)
  * !=1).
  * @param inside 0: tube with inside volume removed, 1: inside volume of the tube, 2: inside and outside volume of tube.
  */
-module tube(r_x, r_y, thick, height, taper_scale, inside = 0)
-{
-    if (shape == "round")
-    {
+module tube(r_x, r_y, thick, height, taper_scale, inside = 0) {
+    if (shape == "round") {
         stretchx = r_x / r_y;
-        linear_extrude(height = height, convexity = 4, scale = taper_scale)
-        {
-            if (inside == 0)
-            {
-                difference()
-                {
-                    scale(1 / stretchx) scale([ stretchx, 1 ]) circle(r = r_x);
-                    offset(delta = -thick) scale(1 / stretchx) scale([ stretchx, 1 ]) circle(r = r_x);
+        linear_extrude(height=height, convexity=4, scale=taper_scale) {
+            if (inside == 0) {
+                difference() {
+                    scale(1 / stretchx) scale([stretchx, 1]) circle(r=r_x);
+                    offset(delta=-thick) scale(1 / stretchx) scale([stretchx, 1]) circle(r=r_x);
                 }
-            }
-            else if (inside == 1)
-            {
-                scale(1 / stretchx) offset(delta = -thick) scale([ stretchx, 1 ]) circle(r = r_x);
-            }
-            else
-            {
-                scale(1 / stretchx) scale([ stretchx, 1 ]) circle(r = r_x);
+            } else if (inside == 1) {
+                scale(1 / stretchx) offset(delta=-thick) scale([stretchx, 1]) circle(r=r_x);
+            } else {
+                scale(1 / stretchx) scale([stretchx, 1]) circle(r=r_x);
             }
         }
-    }
-    else if (shape == "heart")
-    {
-        linear_extrude(height = height) flat_heart(r_x, r_y, thick, inside);
-    }
-    else
-    {
-        linear_extrude(height = height, convexity = 4, scale = taper_scale)
-        {
-            if (inside == 0)
-            {
-                difference()
-                {
-                    square([ 2 * r_x, 2 * r_y ], center = true);
-                    square([ 2 * (r_x - thick), 2 * (r_y - thick) ], center = true);
+    } else if (shape == "heart") {
+        linear_extrude(height=height) flat_heart(r_x, r_y, thick, inside);
+    } else {
+        linear_extrude(height=height, convexity=4, scale=taper_scale) {
+            if (inside == 0) {
+                difference() {
+                    square([2 * r_x, 2 * r_y], center=true);
+                    square([2 * (r_x - thick), 2 * (r_y - thick)], center=true);
                 }
-            }
-            else if (inside == 1)
-            {
-                square([ 2 * (r_x - thick), 2 * (r_y - thick) ], center = true);
-            }
-            else
-            {
-                square([ 2 * r_x, 2 * r_y ], center = true);
+            } else if (inside == 1) {
+                square([2 * (r_x - thick), 2 * (r_y - thick)], center=true);
+            } else {
+                square([2 * r_x, 2 * r_y], center=true);
             }
         }
     }
@@ -198,8 +171,7 @@ module tube(r_x, r_y, thick, height, taper_scale, inside = 0)
  * @param sh_x Shift the grid over this distance in the X direction.
  * @param sh_y Shift the grid over this distance in the Y direction.
  */
-module grid(width, length, strand_width, strand_thick, gap, do_offset, sh_x, sh_y)
-{
+module grid(width, length, strand_width, strand_thick, gap, do_offset, sh_x, sh_y) {
     wh = width / 2;
     lh = length / 2;
     // Let's enforce symmetry just for the heck of it
@@ -208,18 +180,15 @@ module grid(width, length, strand_width, strand_thick, gap, do_offset, sh_x, sh_
 
     for (iy = [-wh_align:strand_width + gap:wh_align])
     {
-        translate([ -lh, iy + sh_y, 0 ]) cube([ length, strand_width, strand_thick ]);
+        translate([-lh, iy + sh_y, 0]) cube([length, strand_width, strand_thick]);
     }
 
     for (ix = [-lh_align:strand_width + gap:lh_align])
     {
-        if (do_offset == "yes")
-        {
-            translate([ ix + sh_x, -wh, strand_thick ]) cube([ strand_width, width, strand_thick ]);
-        }
-        else
-        {
-            translate([ ix + sh_x, -wh, 0 ]) cube([ strand_width, width, strand_thick ]);
+        if (do_offset == "yes") {
+            translate([ix + sh_x, -wh, strand_thick]) cube([strand_width, width, strand_thick]);
+        } else {
+            translate([ix + sh_x, -wh, 0]) cube([strand_width, width, strand_thick]);
         }
     }
 }
@@ -239,31 +208,28 @@ module grid(width, length, strand_width, strand_thick, gap, do_offset, sh_x, sh_
  * @param sh_x Shift the grid over this distance in the X direction.
  * @param sh_y Shift the grid over this distance in the Y direction.
  */
-module sieve(od_x, od_y, strand_width, strand_thick, gap, rim_thick, rim_h, taper_scale, do_offset, sh_x, sh_y)
-{
+module sieve(od_x, od_y, strand_width, strand_thick, gap, rim_thick, rim_h, taper_scale, do_offset, sh_x, sh_y) {
     or_x = od_x / 2;
     or_y = od_y / 2;
-    upper_height = (do_offset == "yes") ? rim_h - 2 * strand_thick - lift_strands + .01
-                                        : rim_h - strand_thick - lift_strands + .01;
+    upper_height =
+        (do_offset == "yes") ? rim_h - 2 * strand_thick - lift_strands + .01
+        : rim_h - strand_thick - lift_strands + .01;
     upper_start = (do_offset == "yes") ? 2 * strand_thick - .01 : strand_thick - .01;
 
     // Add .01 margin to ensure good overlap, avoid non-manifold
-    if (lift_strands > 0)
-    {
+    if (lift_strands > 0) {
         tube(or_x, or_y, rim_thick, lift_strands + .01, 1);
     }
-    translate([ 0, 0, lift_strands ])
-    {
+    translate([0, 0, lift_strands]) {
         // Generate larger grid and then trim it to the outer shape, minus some margin.
         // However, don't make it way larger because this will needlessly increase computing time.
-        intersection()
-        {
-            rotate([ 0, 0, grid_rotation ])
+        intersection() {
+            rotate([0, 0, grid_rotation])
                 grid(od_y * 1.2, od_x * 1.2, strand_width, strand_thick, gap, do_offset, sh_x, sh_y);
-            translate([ 0, 0, -.01 ]) tube(or_x, or_y, .1, rim_h + 2 * strand_thick + .1, 1, 1);
+            translate([0, 0, -.01]) tube(or_x, or_y, .1, rim_h + 2 * strand_thick + .1, 1, 1);
         }
 
-        translate([ 0, 0, upper_start ]) tube(or_x, or_y, rim_thick, upper_height, taper_scale);
+        translate([0, 0, upper_start]) tube(or_x, or_y, rim_thick, upper_height, taper_scale);
     }
 
     tube(or_x, or_y, rim_thick - .4, rim_h - upper_height, 1);
@@ -279,40 +245,51 @@ module sieve(od_x, od_y, strand_width, strand_thick, gap, rim_thick, rim_h, tape
  * @param holder_h_allowance Height allowance for holder fit.
  * @param holder_rim_allowance Rim allowance for holder fit.
  */
-module stackable_sieve_holder(od_x, od_y, rim_thick, rim_h, insert_allowance, holder_h_allowance, holder_rim_allowance,
-                              taper_scale)
-{
+module stackable_sieve_holder(
+    od_x,
+    od_y,
+    rim_thick,
+    rim_h,
+    insert_allowance,
+    holder_h_allowance,
+    holder_rim_allowance,
+    taper_scale
+) {
 
     or_x = od_x / 2 + rim_thick + insert_allowance / 2;
     or_y = od_y / 2 + rim_thick + insert_allowance / 2;
 
-    translate([ 0, 0, -rim_h - zFite ]) union()
-    {
-        tube(or_x, or_y, rim_thick, rim_h * 2, taper_scale);
+    translate([0, 0, -rim_h - zFite]) union() {
+            tube(or_x, or_y, rim_thick, rim_h * 2, taper_scale);
 
-        // rim to sit upon
-        tube(od_x / 2 + insert_allowance / 2, od_y / 2 + insert_allowance / 2, rim_thick + insert_allowance, rim_h,
-             taper_scale);
+            // rim to sit upon
+            tube(
+                od_x / 2 + insert_allowance / 2, od_y / 2 + insert_allowance / 2, rim_thick + insert_allowance, rim_h,
+                taper_scale
+            );
 
-        // male holder
-        translate([ 0, 0, rim_h * 2 ]) difference()
-            tube(or_x - rim_thick / 2, or_y - rim_thick / 2, rim_thick / 2, rim_h, taper_scale);
+            // male holder
+            translate([0, 0, rim_h * 2]) difference()
+                    tube(or_x - rim_thick / 2, or_y - rim_thick / 2, rim_thick / 2, rim_h, taper_scale);
 
-        // female holder
-        translate([ 0, 0, -rim_h ]) tube(or_x, or_y, rim_thick / 2 - holder_rim_allowance, rim_h, taper_scale);
-    }
+            // female holder
+            translate([0, 0, -rim_h]) tube(or_x, or_y, rim_thick / 2 - holder_rim_allowance, rim_h, taper_scale);
+        }
 }
 
 // Generate the sieve
-color("green") sieve(od_x = outer_diameter + stretch, od_y = outer_diameter, strand_width = strand_width,
-                     strand_thick = strand_thickness, gap = gap_size, rim_thick = rim_thickness, rim_h = rim_height,
-                     taper_scale = taper, do_offset = offset_strands, sh_x = shift_x_abs, sh_y = shift_y_abs);
+color("green") sieve(
+        od_x=outer_diameter + stretch, od_y=outer_diameter, strand_width=strand_width,
+        strand_thick=strand_thickness, gap=gap_size, rim_thick=rim_thickness, rim_h=rim_height,
+        taper_scale=taper, do_offset=offset_strands, sh_x=shift_x_abs, sh_y=shift_y_abs
+    );
 
 // Generate the stackable rim if requested
-if (stackable_rim == "yes")
-{
-    color("blue") stackable_sieve_holder(od_x = outer_diameter, od_y = outer_diameter, rim_thick = rim_thickness,
-                                         rim_h = rim_height, insert_allowance = holder_insert_allowance,
-                                         holder_h_allowance = holder_height_allowance,
-                                         holder_rim_allowance = holder_dia_allowance, taper_scale = taper);
+if (stackable_rim == "yes") {
+    color("blue") stackable_sieve_holder(
+            od_x=outer_diameter, od_y=outer_diameter, rim_thick=rim_thickness,
+            rim_h=rim_height, insert_allowance=holder_insert_allowance,
+            holder_h_allowance=holder_height_allowance,
+            holder_rim_allowance=holder_dia_allowance, taper_scale=taper
+        );
 }
