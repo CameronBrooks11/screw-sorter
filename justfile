@@ -1,19 +1,20 @@
 default:
     @just --list
 
-# Render the sorter's tray and holder and every example, failing on any warning
+# Render the tray, the holder and every example, and check their sizes and that they fit
 test:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    out=$(mktemp -d)
-    for part in sieve holder; do
-        echo "screw_sorter.scad: $part"
-        openscad --hardwarnings --export-format binstl -D "render=\"$part\"" -o "$out/$part.stl" screw_sorter.scad
-    done
-    for f in examples/*.scad; do
-        echo "$f"
-        openscad --hardwarnings --export-format binstl -o "$out/example.stl" "$f"
-    done
+    python3 tests/test_screw_sorter.py
+
+# Everything CI runs, bar the tests
+check: fmt-check
+
+# Format the .scad sources with topiary (.topiary/languages.ncl)
+fmt:
+    git ls-files -z '*.scad' | xargs -0 -r topiary format
+
+# Check the .scad sources are formatted, without changing them
+fmt-check:
+    git ls-files -z '*.scad' | xargs -0 -r -n1 topiary format --check
 
 # Render the README picture into docs/img/: a tray sitting in its holder
 images:
