@@ -51,9 +51,6 @@ holder_insert_allowance = 0.5;
 // Define the allowance to achieve the desired diameter clearance between the sieve and the rim for a holder fit
 holder_dia_allowance = 0.3; // Range: [0:0.1:5]
 
-// Define the height allowance to to prevent seam gaps between the sieve and the rim for the holder fit
-holder_height_allowance = 0.4; // Range: [0:0.1:5]
-
 // Currently only works for round! Adds a stackable rim to the sieve the height of the rim on both sides
 stackable_rim = "no"; // [yes,no]
 
@@ -242,7 +239,6 @@ module sieve(od_x, od_y, strand_width, strand_thick, gap, rim_thick, rim_h, tape
  * @param od_y Outer Y dimension of the cylinder or rectangle.
  * @param rim_thick Thickness of outer rim.
  * @param rim_h Height of outer rim.
- * @param holder_h_allowance Height allowance for holder fit.
  * @param holder_rim_allowance Rim allowance for holder fit.
  */
 module stackable_sieve_holder(
@@ -251,7 +247,6 @@ module stackable_sieve_holder(
     rim_thick,
     rim_h,
     insert_allowance,
-    holder_h_allowance,
     holder_rim_allowance,
     taper_scale
 ) {
@@ -289,7 +284,6 @@ if (stackable_rim == "yes") {
     color("blue") stackable_sieve_holder(
             od_x=outer_diameter, od_y=outer_diameter, rim_thick=rim_thickness,
             rim_h=rim_height, insert_allowance=holder_insert_allowance,
-            holder_h_allowance=holder_height_allowance,
             holder_rim_allowance=holder_dia_allowance, taper_scale=taper
         );
 }
